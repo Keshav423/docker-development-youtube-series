@@ -1,7 +1,3 @@
-###########################################################
-# Rename the file extension to ".yaml" (remove "_") to enable
-###########################################################
-
 name: Docker Build
 
 on: [push]
@@ -10,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@master
     - name: docker login
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}   
@@ -19,7 +15,7 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: docker build csharp
       run: |
-        docker build ./c# -t aimvector/csharp:1.0.0
+        docker build ./c# -t keshavbyri/docker-jenkins:1.0.0
     - name: docker push
       run: |
-        docker push aimvector/csharp:1.0.0
+        docker push keshavbyri/docker-jenkins:1.0.0
