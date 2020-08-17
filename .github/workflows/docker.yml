@@ -1,21 +1,26 @@
-name: Docker Build
+name: Docker login
 
-on: [push]
+on:
+  push:
+    branches: master
+    tags:
 
 jobs:
-  build:
+  login:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: docker login
+    - name: checkout
+      uses: actions/checkout@v2
+      
+    - name: Login to DockerHub
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}   
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-    - name: docker build csharp
-      run: |
-        docker build ./c# -t keshavbyri/docker-jenkins:1.0.0
-    - name: docker push
-      run: |
-        docker push keshavbyri/docker-jenkins:1.0.0
+#    - name: docker build csharp
+#      run: |
+#        docker build ./c# -t keshavbyri/docker-jenkins:1.0.0
+#    - name: docker push
+#      run: |
+#        docker push keshavbyri/docker-jenkins:1.0.0
